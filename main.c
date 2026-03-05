@@ -58,10 +58,13 @@ int main () {
 
             case '5':
             printf("Excluir\n");
+            excluirContato(list);
+            cont--;
             break;
 
             case '6':
             printf("Estatísticas\n");
+            showDash(list, cont);
             break;
 
             case '7':

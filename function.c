@@ -205,7 +205,7 @@ int auxiliarEdit (struct contact *p) {
     }
 
     if(found != 1) {
-        errorRep(5);
+        errorRep(1);
     } return -1;
     
 }
@@ -277,4 +277,88 @@ void printStruct (struct contact *p, int i) {
     printf("Nome: %s\n", p[i].name);
     printf("Número: %s\n", p[i].number);
     printf("E-mail: %s\n", p[i].email);
+}
+
+void excluirContato (struct contact *p) {
+    int ref;
+    char confirm;
+    struct contact *addres;
+
+    ref = auxiliarEdit(p);
+
+    if(ref == -1) {
+        return;
+    }
+
+    addres = &p[ref];
+
+    printf("Deseja realmente excluir o contato listado? S/N\n");
+    confirm = getch();
+
+    if(confirm == 's' || confirm == 'S') {
+        memset(addres, 0, sizeof(struct contact));
+    }else {
+        printf("Exclusão Cancelada\n");
+        system("pause");
+    }
+
+}
+
+void showDash (struct contact *p, int cont) {
+    printf("========== Estatísticas ==========\n");
+    printf("Número de contatos salvos: %d", cont);
+    printf("Número de espaços livres para contatos: %d", 100 - cont);
+
+{
+    int option;
+    do {
+
+        printf("Escolha uma das opções abaixo:\n");
+        printf("1 - Listar contatos baseado em parâmetros\n");
+        printf("2 - Mostrar e-mail por filtro\n");
+        printf("3 - Mostrar contatos com DDD específico\n");
+        option = getch();
+
+        switch(option) {
+            case '1':
+            char initial, name[100];
+            {
+            int option;
+            do {
+                system("cls");
+                printf("Escolha uma das opções de filtro:\n");
+                option = getch();
+
+                switch(option) {
+                    case '1': //Consulta por inicial
+                    printf("Insira a inicial a ser encontrada:\n");
+                    initial = getchar();
+                    buscarInicial(initial, p);
+                    break;
+
+                    case '2':
+                    
+                }
+
+            } while (option !=1);
+            }
+        }
+        
+    } while (option != 4);
+}
+}
+
+void buscarInicial (char initial, struct contact *p) {
+    int existe = 0;
+    
+    for(int i = 0; i < 100; i++) {
+        if(p[i].used == 1 && p[i].name[0] == initial) {
+            printStruct(p, i);
+            existe = 1;
+        }
+    }
+
+    if(existe != 1) {
+        errorRep(5);
+    }
 }

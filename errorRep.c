@@ -25,8 +25,7 @@ void errorRep (int errorNum) {
         break;
 
         case 5:
-        printf("Valor não encontrdo, tente outro:\n");
+        printf("Não existem valores correspondentes ao filtro\n");
         system("pause");
-        break;
     }
 }
