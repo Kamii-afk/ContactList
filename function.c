@@ -184,78 +184,6 @@ void buscarContato(struct contact *p) {
     } while (option != '5');
 }
 
-void editarContato (struct contact *p) {
-    char name[100];
-    int indice, option;
-    
-        printf("Insira o nome a ser buscado:\n");
-            fgets(name, sizeof(name), stdin);
-            name[strcspn(name, "\n")] = '\0';
-            
-            printf("Nome encontrado!\n");
-            for (int i = 0; i < 100; i++) {
-                if (strcmp(p[i].name, name) == 0) {
-                    printf("%s\n", p[i].name);
-                    printf("%s\n", p[i].number);
-                    printf("%s\n", p[i].email);
-                    indice = i;
-                    break;
-                }
-            }
-                       
-            do {
-
-                printf("Deseja alterar:\nNome -> 1\nNumero -> 2\nE-mail -> 3\nSair -> 4\n");
-                option = getch();
-                system("cls");
-                
-                switch(option) {
-                    case '1': {
-                    printf("Insira o novo nome:\n");
-                    fgets(p[indice].name, sizeof(p[indice].name), stdin);
-                    p[indice].name[strcspn(p[indice].name, "\n")] = '\0';
-
-                    printf("Nome alterado!\n");
-                    printf("%s", p[indice].name);
-                    printf("%s", p[indice].number);
-                    printf("%s", p[indice].email);
-
-                    break;
-                    }
-
-                    case '2': {
-                    printf("Insira o novo número:\n");
-                    fgets(p->number, sizeof(p->number), stdin);
-                    p->email[strcspn(p->email, "\n")] = '\0';
-
-                    printf("Número Alterado!\n");
-                    printf("Nome alterado!\n");
-                    printf("%s", p[indice].name);
-                    printf("%s", p[indice].number);
-                    printf("%s", p[indice].email);
-                    break;
-                    }
-
-                    case 3: {
-                    printf("Insira o novo E-mail\n");
-                    fgets(p->email, sizeof(p->email), stdin);
-                    p->email[strcspn(p->email, "\n")] = '\0';
-
-                    printf("E-mail alterado!\n");
-                    printf("Nome alterado!\n");
-                    printf("%s", p[indice].name);
-                    printf("%s", p[indice].number);
-                    printf("%s", p[indice].email);
-                    break;
-                    }
-
-                    case 4:
-                    return;
-                }
-
-            } while (option != '4');
-}
-
 int auxiliarEdit (struct contact *p) {
     char name [100];
     int ref, found;
@@ -282,7 +210,7 @@ int auxiliarEdit (struct contact *p) {
     
 }
 
-void editarContato2 (struct contact *p) {
+void editarContato (struct contact *p) {
     int ref, option;
 
     ref = auxiliarEdit(p);
