@@ -30,6 +30,8 @@ void listarContato (struct contact *p) {
     int contador, livre;
     contador = 0;
 
+    system("cls");
+
     for (int i = 0; i < 100; i++) {
         if(p[i].used == 1) {
             printf("================= Contato Número %d =================\n", i + 1);
@@ -68,7 +70,7 @@ void buscarContato(struct contact *p) {
             scanf("%d", &indice);
             getchar();
 
-            if(indice < 0 || indice > 100) {
+            if(indice < 1 || indice > 100) {
                 errorRep(4);
                 break;
             } 
@@ -78,13 +80,17 @@ void buscarContato(struct contact *p) {
                 printf("%s\n", p[indice - 1].number);
                 printf("%s\n", p[indice - 1].email);
                 system("pause");
+                break;
             } else {
                 errorRep(3);
+                system("pause");
                 system("cls");
                 break;
             }
             
-            case '2':
+            case '2': {
+            int found = 0;
+
             system("cls");
             printf("Consulta por nome\n");
             printf("Insira o nome a ser buscado:\n");
@@ -98,12 +104,21 @@ void buscarContato(struct contact *p) {
                     printf("%s\n", p[i].number);
                     printf("%s\n", p[i].email);
                     system("pause");
+                    found = 1;
                     break;
                 }
             }
-            break;
 
-            case '3':
+            if (found != 1) {
+                errorRep(3);
+                break;
+            }
+            break;
+        }
+
+            case '3': {
+            int found = 0;
+
             system("cls");
             printf("Consulta por Número\n");
             printf("Insira o número a ser consultado:\n");
@@ -117,12 +132,22 @@ void buscarContato(struct contact *p) {
                     printf("%s\n", p[i].number);
                     printf("%s\n", p[i].email);
                     system("pause");
+                    found = 1;
                     break;
                 }
             }
-            break;
 
-            case '4':
+            if(found != 1) {
+                errorRep(3);
+                break;
+            }
+            
+            break;
+        }
+
+            case '4': {
+            int found = 0;
+
             system("cls");
             printf("Consulta por E-mail\n");
             printf("Insira o E-mail a ser consultado:\n");
@@ -136,10 +161,18 @@ void buscarContato(struct contact *p) {
                     printf("%s\n", p[i].number);
                     printf("%s\n", p[i].email);
                     system("pause");
+                    found = 1;
                     break;
                 }
             }
+
+            if(found != 1) {
+                errorRep(3);
+                break;
+            }
+
             break;
+        }
 
             case '5':
             break;
@@ -152,5 +185,168 @@ void buscarContato(struct contact *p) {
 }
 
 void editarContato (struct contact *p) {
+    char name[100];
+    int indice, option;
     
+        printf("Insira o nome a ser buscado:\n");
+            fgets(name, sizeof(name), stdin);
+            name[strcspn(name, "\n")] = '\0';
+            
+            printf("Nome encontrado!\n");
+            for (int i = 0; i < 100; i++) {
+                if (strcmp(p[i].name, name) == 0) {
+                    printf("%s\n", p[i].name);
+                    printf("%s\n", p[i].number);
+                    printf("%s\n", p[i].email);
+                    indice = i;
+                    break;
+                }
+            }
+                       
+            do {
+
+                printf("Deseja alterar:\nNome -> 1\nNumero -> 2\nE-mail -> 3\nSair -> 4\n");
+                option = getch();
+                system("cls");
+                
+                switch(option) {
+                    case '1': {
+                    printf("Insira o novo nome:\n");
+                    fgets(p[indice].name, sizeof(p[indice].name), stdin);
+                    p[indice].name[strcspn(p[indice].name, "\n")] = '\0';
+
+                    printf("Nome alterado!\n");
+                    printf("%s", p[indice].name);
+                    printf("%s", p[indice].number);
+                    printf("%s", p[indice].email);
+
+                    break;
+                    }
+
+                    case '2': {
+                    printf("Insira o novo número:\n");
+                    fgets(p->number, sizeof(p->number), stdin);
+                    p->email[strcspn(p->email, "\n")] = '\0';
+
+                    printf("Número Alterado!\n");
+                    printf("Nome alterado!\n");
+                    printf("%s", p[indice].name);
+                    printf("%s", p[indice].number);
+                    printf("%s", p[indice].email);
+                    break;
+                    }
+
+                    case 3: {
+                    printf("Insira o novo E-mail\n");
+                    fgets(p->email, sizeof(p->email), stdin);
+                    p->email[strcspn(p->email, "\n")] = '\0';
+
+                    printf("E-mail alterado!\n");
+                    printf("Nome alterado!\n");
+                    printf("%s", p[indice].name);
+                    printf("%s", p[indice].number);
+                    printf("%s", p[indice].email);
+                    break;
+                    }
+
+                    case 4:
+                    return;
+                }
+
+            } while (option != '4');
+}
+
+int auxiliarEdit (struct contact *p) {
+    char name [100];
+    int ref, found;
+    
+    printf("Insira o nome do contato a ser buscado:\n");
+    fgets(name, sizeof(name), stdin);
+    name[strcspn(name, "\n")] = '\0';
+    
+    for(int i = 0; i < 100; i++) {
+        if(strcmp(name, p[i].name) == 0) {
+            printf("Nome encontrado:\n");
+            printf("Nome: %s\n", p[i].name);
+            printf("Número: %s\n", p[i].number);
+            printf("E-mail: %s\n", p[i].email);
+            found = 1;
+            ref = i;
+            return ref;
+        }
+    }
+
+    if(found != 1) {
+        errorRep(5);
+    } return -1;
+    
+}
+
+void editarContato2 (struct contact *p) {
+    int ref, option;
+
+    ref = auxiliarEdit(p);
+
+    if(ref == -1) {
+        return;
+    }
+
+    
+    do {
+        printf("========== Escolha uma opção para editar: ==========\n");
+        printf("1 => Nome\n2 => Número\n3 => E-mail\n4 => Sair\n");
+        option = getch();
+        switch (option) {
+            case '1':
+            printf("Insira o novo nome:\n");
+            fgets(p[ref].name, sizeof(p[ref].name), stdin);
+            p[ref].name[strcspn(p[ref].name, "\n")] = '\0';
+
+            printf("Nome alterado!\n");
+            printStruct(p, ref);
+
+            break;
+
+            case '2':
+            printf("Insira o novo número:\n");
+            fgets(p[ref].number, sizeof(p[ref].number), stdin);
+            p[ref].number[strcspn(p[ref].number, "\n")] = '\0';
+
+            printf("Número alterado!\n");
+            printStruct(p, ref);
+            break;
+
+            case '3':
+            printf("Insira o novo E-mail:\n");
+            fgets(p[ref].email, sizeof(p[ref].email), stdin);
+            p[ref].email[strcspn(p[ref].email, "\n")] = '\0';
+
+            printf("E-mail alterado!\n");
+            printStruct(p, ref);
+            break;
+
+            case '4':
+            return;
+
+            default:
+            errorRep(2);
+        }
+    } while (option != '4');
+}
+
+void printStruct (struct contact *p, int i) {
+
+    if(i < 0 || i > 100) {
+        errorRep(1);
+        return;
+    }
+
+    if(p[i].used != 1) {
+        errorRep(3);
+        return;
+    }
+    
+    printf("Nome: %s\n", p[i].name);
+    printf("Número: %s\n", p[i].number);
+    printf("E-mail: %s\n", p[i].email);
 }

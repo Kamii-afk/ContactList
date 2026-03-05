@@ -18,5 +18,7 @@ void cadastrarContato (struct contact *p);
 void buscarContato (struct contact *p);
 void listarContato (struct contact *p);
 void editarContato (struct contact *p);
+void editarContato2 (struct contact *p);
+void printStruct (struct contact *p, int i);
 
 #endif
