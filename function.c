@@ -3,20 +3,37 @@
 #include <conio.h>
 #include <string.h>
 #include <windows.h>
+#include <ctype.h>
 
 void cadastrarContato (struct contact *p) {
+    int check = 0;
+    do {
     printf("Insira o Nome:\n");
     fgets(p->name, sizeof(p->name), stdin);
     p->name[strcspn(p->name, "\n")] = '\0';
+    upperString(p->name, &check);
+    } while (!check);
 
+    check = 0;
+
+    do {
     printf("Insira o Número:\n");
     fgets(p->number, sizeof(p->number), stdin);
     p->number[strcspn(p->number, "\n")] = '\0';
+    validaNumero(p->number, &check);
+    } while (!check);
 
+    check = 0;
+
+    do {
     printf("Insira o E-mail:\n");
     fgets(p->email, sizeof(p->email), stdin);
     p->email[strcspn(p->email, "\n")] = '\0';
+    validaEmail(p->email, &check);
+    } while (!check);
 
+    check = 0;
+    
     p->used = 1;
 
     printf("===== Valores inseridos =====\n");
@@ -24,6 +41,53 @@ void cadastrarContato (struct contact *p) {
     printf("Número: %s\n", p->number);
     printf("E-mail: %s\n", p->email);
     
+}
+
+void upperString (char *string, int *check) {
+    int firstLetter = 1;
+
+    if(string[0] == '\0') {
+        errorRep(6);
+        *check = 0;
+        return;
+    } else {
+        *check = 1;
+    }
+
+    for(int i = 0; i < string[i] != '\0'; i++) {
+        if(string[i] == ' ') {
+            firstLetter = 1;
+        } else if(firstLetter) {
+            string[i] = toupper(string[i]);
+            firstLetter = 0;
+        } else {
+            string[i] = tolower(string[i]);
+        }
+    }
+}
+
+void validaNumero (char *p, int *check) {
+    if(p[0] == '\0') {
+        errorRep(6);
+        *check = 0;
+        return;
+    } else if(strlen(p) <= 8) {
+        errorRep(7);
+        *check = 0;
+        return;
+    } else {
+        *check = 1;
+        return;
+    }
+}
+
+void validaEmail (char *p, int *check) {
+    if(p[0] == '\0') {
+        errorRep(6);
+        *check = 0;
+    } else {
+        *check = 1;
+    }
 }
 
 void listarContato (struct contact *p) {
@@ -90,12 +154,14 @@ void buscarContato(struct contact *p) {
             
             case '2': {
             int found = 0;
+            int check = 0;
 
             system("cls");
             printf("Consulta por nome\n");
             printf("Insira o nome a ser buscado:\n");
             fgets(name, sizeof(name), stdin);
             name[strcspn(name, "\n")] = '\0';
+            upperString(name, &check);
 
             for (int i = 0; i < 100; i++) {
                 if (strcmp(p[i].name, name) == 0) {
@@ -319,14 +385,17 @@ void showDash (struct contact *p, int cont) {
         printf("3 - Mostrar contatos com DDD específico\n");
         option = getch();
 
+        char initial; 
+        char name[100];
+
         switch(option) {
             case '1':
-            char initial, name[100];
             {
             int option;
             do {
                 system("cls");
                 printf("Escolha uma das opções de filtro:\n");
+                printf("1 - Buscar inicial a ser encontrada\n");
                 option = getch();
 
                 switch(option) {
@@ -336,7 +405,9 @@ void showDash (struct contact *p, int cont) {
                     buscarInicial(initial, p);
                     break;
 
-                    case '2':
+                    default:
+                    errorRep(2);
+                    break;
                     
                 }
 
@@ -355,6 +426,7 @@ void buscarInicial (char initial, struct contact *p) {
         if(p[i].used == 1 && p[i].name[0] == initial) {
             printStruct(p, i);
             existe = 1;
+            system("pause");
         }
     }
 

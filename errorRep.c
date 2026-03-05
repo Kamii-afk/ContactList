@@ -27,5 +27,16 @@ void errorRep (int errorNum) {
         case 5:
         printf("Não existem valores correspondentes ao filtro\n");
         system("pause");
+        break;
+
+        case 6:
+        printf("Valor não foi preenchido, tente novamente:\n");
+        system("pause");
+        break;
+
+        case 7:
+        printf("Valor muito pequeno, tente novamente\n");
+        system("pause");
+        break;
     }
 }

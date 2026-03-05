@@ -53,7 +53,7 @@ int main () {
 
             case '4':
             printf("Editar\n");
-            editarContato2(list);
+            editarContato(list);
             break;
 
             case '5':

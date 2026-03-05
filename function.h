@@ -15,6 +15,9 @@ struct contact {
 void errorRep (int errorNum);
 
 void cadastrarContato (struct contact *p);
+void upperString (char *string, int *check); //uppercase
+void validaNumero (char *p, int *check); //Validação de Número
+void validaEmail (char *p, int *check); //Velidação de e-mail 
 void buscarContato (struct contact *p);
 void listarContato (struct contact *p);
 void editarContato (struct contact *p);
@@ -25,4 +28,5 @@ void showDash (struct contact *p, int cont); //Função para exibição de estat
 
 //Funções auxiliares de ShowDash
 void buscarInicial (char initial, struct contact *p);
+
 #endif
