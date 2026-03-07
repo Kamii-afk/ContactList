@@ -58,8 +58,7 @@ int main () {
 
             case '5':
             printf("Excluir\n");
-            excluirContato(list);
-            cont--;
+            excluirContato(list, &cont);
             break;
 
             case '6':

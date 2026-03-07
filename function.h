@@ -10,6 +10,7 @@ struct contact {
     char number[TAM_NUMBER];
     char email[TAM_EMAIL];
     int used;
+    char *lcDom;
 };
 
 void errorRep (int errorNum);
@@ -23,7 +24,7 @@ void listarContato (struct contact *p);
 void editarContato (struct contact *p);
 void printStruct (struct contact *p, int i);
 int auxiliarEdit (struct contact *p); //Função de Busca de contatos
-void excluirContato (struct contact *p);
+void excluirContato (struct contact *p, int *c);
 void showDash (struct contact *p, int cont); //Função para exibição de estatísticas
 
 //Funções auxiliares de ShowDash

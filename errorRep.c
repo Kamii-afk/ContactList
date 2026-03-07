@@ -38,5 +38,10 @@ void errorRep (int errorNum) {
         printf("Valor muito pequeno, tente novamente\n");
         system("pause");
         break;
+
+        case 8:
+        printf("Valor não possui correspondência\n");
+        system("pause");
+        break;
     }
 }

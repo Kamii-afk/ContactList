@@ -252,11 +252,12 @@ void buscarContato(struct contact *p) {
 
 int auxiliarEdit (struct contact *p) {
     char name [100];
-    int ref, found;
+    int ref, found, check;
     
     printf("Insira o nome do contato a ser buscado:\n");
     fgets(name, sizeof(name), stdin);
     name[strcspn(name, "\n")] = '\0';
+    upperString(name, &check);
     
     for(int i = 0; i < 100; i++) {
         if(strcmp(name, p[i].name) == 0) {
@@ -345,7 +346,7 @@ void printStruct (struct contact *p, int i) {
     printf("E-mail: %s\n", p[i].email);
 }
 
-void excluirContato (struct contact *p) {
+void excluirContato (struct contact *p, int *c) {
     int ref;
     char confirm;
     struct contact *addres;
@@ -363,6 +364,7 @@ void excluirContato (struct contact *p) {
 
     if(confirm == 's' || confirm == 'S') {
         memset(addres, 0, sizeof(struct contact));
+        *c--;
     }else {
         printf("Exclusão Cancelada\n");
         system("pause");
@@ -380,39 +382,27 @@ void showDash (struct contact *p, int cont) {
     do {
 
         printf("Escolha uma das opções abaixo:\n");
-        printf("1 - Listar contatos baseado em parâmetros\n");
+        printf("1 - Listar contatos por inicial\n");
         printf("2 - Mostrar e-mail por filtro\n");
         printf("3 - Mostrar contatos com DDD específico\n");
         option = getch();
 
-        char initial; 
+        char initial, dominio[20];
         char name[100];
+        int *check;
 
         switch(option) {
             case '1':
-            {
-            int option;
-            do {
-                system("cls");
-                printf("Escolha uma das opções de filtro:\n");
-                printf("1 - Buscar inicial a ser encontrada\n");
-                option = getch();
+            printf("Insira a inicial a ser encontrada:\n");
+            initial = getchar();
+            buscarInicial(initial, p);
+            break;
 
-                switch(option) {
-                    case '1': //Consulta por inicial
-                    printf("Insira a inicial a ser encontrada:\n");
-                    initial = getchar();
-                    buscarInicial(initial, p);
-                    break;
-
-                    default:
-                    errorRep(2);
-                    break;
-                    
-                }
-
-            } while (option !=1);
-            }
+            case '2':
+            printf("Insira o domínio de e-mail a ser encontrado:\n");
+            fgets(dominio, sizeof(dominio), stdin);
+            dominio[strcspn(dominio, "\n")] = '\0';
+            buscarDominio(p, dominio, check);
         }
         
     } while (option != 4);
