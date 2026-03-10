@@ -104,9 +104,7 @@ void listarContato (struct contact *p) {
             printf("%s\n", p[i].email);
 
             contador++;
-        } else {
-            break;
-        }
+        } 
     }
 
     livre = 100 - contador;
@@ -252,7 +250,7 @@ void buscarContato(struct contact *p) {
 
 int auxiliarEdit (struct contact *p) {
     char name [100];
-    int ref, found, check;
+    int ref, found = 0, check;
     
     printf("Insira o nome do contato a ser buscado:\n");
     fgets(name, sizeof(name), stdin);
@@ -283,6 +281,7 @@ void editarContato (struct contact *p) {
     ref = auxiliarEdit(p);
 
     if(ref == -1) {
+        errorRep(8);
         return;
     }
 
@@ -346,16 +345,18 @@ void printStruct (struct contact *p, int i) {
     printf("E-mail: %s\n", p[i].email);
 }
 
-void excluirContato (struct contact *p, int *c) {
+void excluirContato (struct contact *p, int *c, int *n) {
     int ref;
     char confirm;
     struct contact *addres;
 
+    do{
     ref = auxiliarEdit(p);
 
     if(ref == -1) {
         return;
     }
+    } while (ref == -1);
 
     addres = &p[ref];
 
@@ -364,7 +365,7 @@ void excluirContato (struct contact *p, int *c) {
 
     if(confirm == 's' || confirm == 'S') {
         memset(addres, 0, sizeof(struct contact));
-        *c--;
+        (*n)--;
     }else {
         printf("Exclusão Cancelada\n");
         system("pause");
@@ -372,10 +373,20 @@ void excluirContato (struct contact *p, int *c) {
 
 }
 
+void checkUse (struct contact *p, int *c) {
+    for(int i = 0; i < 100; i++) {
+        if (p[i].used == 0) {
+            *c = i; 
+            return;
+        }
+    }
+}
+
 void showDash (struct contact *p, int cont) {
+    system("cls");
     printf("========== Estatísticas ==========\n");
-    printf("Número de contatos salvos: %d", cont);
-    printf("Número de espaços livres para contatos: %d", 100 - cont);
+    printf("Número de contatos salvos: %d\n", cont);
+    printf("Número de espaços livres para contatos: %d\n", 100 - cont);
 
 {
     int option;
@@ -387,22 +398,21 @@ void showDash (struct contact *p, int cont) {
         printf("3 - Mostrar contatos com DDD específico\n");
         option = getch();
 
-        char initial, dominio[20];
+        char initial;
         char name[100];
         int *check;
 
         switch(option) {
             case '1':
             printf("Insira a inicial a ser encontrada:\n");
-            initial = getchar();
+            scanf("%c", &initial);
+            getchar();
+            initial = toupper(initial);
             buscarInicial(initial, p);
             break;
 
-            case '2':
-            printf("Insira o domínio de e-mail a ser encontrado:\n");
-            fgets(dominio, sizeof(dominio), stdin);
-            dominio[strcspn(dominio, "\n")] = '\0';
-            buscarDominio(p, dominio, check);
+            case '4':
+            return;
         }
         
     } while (option != 4);

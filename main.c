@@ -14,6 +14,7 @@ int main () {
     SetConsoleOutputCP(CP_UTF8);
     int option;
     int cont = 0;
+    int livre;
     char resp;
 
     contact list[TAM_LIST] = {0};
@@ -29,9 +30,10 @@ int main () {
         switch(option) {
             case '1':
             do {
+                checkUse(list, &livre);
                 system("cls");
                 printf("Novo cadastro\n");
-                cadastrarContato(&list[cont]);
+                cadastrarContato(&list[livre]);
                 cont++;
                 printf("Deseja Inserir mais algum? (S/N)\n");
                 scanf("%c", &resp);
@@ -57,8 +59,11 @@ int main () {
             break;
 
             case '5':
+            checkUse(list, &livre);
             printf("Excluir\n");
-            excluirContato(list, &cont);
+            excluirContato(list, &livre, &cont);
+            printf("%d", cont);
+            system("pause");
             break;
 
             case '6':

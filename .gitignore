@@ -1,2 +1,4 @@
 #Ignorando Executável
 contactList.exe
+#Ignorando Editor
+.vscode
