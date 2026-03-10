@@ -12,13 +12,25 @@ typedef struct contact contact;
 
 int main () {
     SetConsoleOutputCP(CP_UTF8);
+
+    FILE *fp = fopen("contatos.bin", "ab+");
+    
+    if(!fp) {
+        printf("Não foi possível abrir o arquivo!\n");
+        return 1;
+    }
+
+    rewind(fp);
+    
     int option;
     int cont = 0;
     int livre;
     char resp;
-
+    
     contact list[TAM_LIST] = {0};
 
+    lerRegistro(list, fp, &cont);
+    
     printf("======= Lista de Contatos =======\nPara continuar pressione Enter...\n");
     getchar();
 
@@ -33,7 +45,7 @@ int main () {
                 checkUse(list, &livre);
                 system("cls");
                 printf("Novo cadastro\n");
-                cadastrarContato(&list[livre]);
+                cadastrarContato(&list[livre], fp);
                 cont++;
                 printf("Deseja Inserir mais algum? (S/N)\n");
                 scanf("%c", &resp);

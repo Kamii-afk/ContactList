@@ -2,3 +2,5 @@
 contactList.exe
 #Ignorando Editor
 .vscode
+#Ignorando arquivo de persistência local
+contatos.bin

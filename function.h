@@ -5,6 +5,8 @@
 #define TAM_NUMBER 20
 #define TAM_EMAIL 100
 
+#include <stdio.h>
+
 struct contact {
     char name[TAM_NAME];
     char number[TAM_NUMBER];
@@ -15,7 +17,12 @@ struct contact {
 
 void errorRep (int errorNum);
 
-void cadastrarContato (struct contact *p);
+//Manipulação de Arquivos
+void lerRegistro (struct contact *p, FILE *fp, int *cont);
+void salvarRegistro (struct contact *p, FILE *fp);
+
+//Funções Programa
+void cadastrarContato (struct contact *p, FILE *fp);
 void upperString (char *string, int *check); //uppercase
 void validaNumero (char *p, int *check); //Validação de Número
 void validaEmail (char *p, int *check); //Velidação de e-mail 
@@ -30,5 +37,6 @@ void checkUse (struct contact *p, int *c);
 
 //Funções auxiliares de ShowDash
 void buscarInicial (char initial, struct contact *p);
+void foundDDD (struct contact *p, char *ddd);
 
 #endif

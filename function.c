@@ -5,7 +5,21 @@
 #include <windows.h>
 #include <ctype.h>
 
-void cadastrarContato (struct contact *p) {
+//Permanência de Arquivos
+void lerRegistro (struct contact *p, FILE *fp, int *cont) {
+    *cont = 0;
+    
+    while(fread(&p[*cont], sizeof(struct contact), 1, fp)) {
+        (*cont)++;
+    }
+}
+
+void salvarRegistro (struct contact *p, FILE *fp) {
+    fseek(fp, 0, SEEK_END);
+    fwrite(p, sizeof(struct contact), 1, fp);
+}
+
+void cadastrarContato (struct contact *p, FILE *fp) {
     int check = 0;
     do {
     printf("Insira o Nome:\n");
@@ -40,6 +54,8 @@ void cadastrarContato (struct contact *p) {
     printf("Nome: %s\n", p->name);
     printf("Número: %s\n", p->number);
     printf("E-mail: %s\n", p->email);
+
+    salvarRegistro(p, fp);
     
 }
 
@@ -330,7 +346,7 @@ void editarContato (struct contact *p) {
 
 void printStruct (struct contact *p, int i) {
 
-    if(i < 0 || i > 100) {
+    if(i < 0 || i >= 100) {
         errorRep(1);
         return;
     }
@@ -396,10 +412,12 @@ void showDash (struct contact *p, int cont) {
         printf("1 - Listar contatos por inicial\n");
         printf("2 - Mostrar e-mail por filtro\n");
         printf("3 - Mostrar contatos com DDD específico\n");
+        printf("4 - Sair\n");
         option = getch();
 
         char initial;
         char name[100];
+        char ddd[5];
         int *check;
 
         switch(option) {
@@ -409,6 +427,13 @@ void showDash (struct contact *p, int cont) {
             getchar();
             initial = toupper(initial);
             buscarInicial(initial, p);
+            break;
+
+            case '3':
+            printf("Insira o DDD a ser encontrado:\n");
+            fgets(ddd, sizeof(ddd), stdin);
+            ddd[strspn(ddd, "\n")] = '\0';
+            foundDDD(p, ddd);
             break;
 
             case '4':
@@ -432,5 +457,23 @@ void buscarInicial (char initial, struct contact *p) {
 
     if(existe != 1) {
         errorRep(5);
+    }
+}
+
+void foundDDD (struct contact *p, char *ddd) {
+    system("cls");
+    int j = 0;
+    int found = 0;
+
+    for(int i = 0; i < 100; i++) {
+        if(strncmp(p[i].number, ddd, strlen(ddd)) == 0) {
+            printf("Contato número %d\n", i);
+            found = 1;
+        }
+    }
+
+    if(found != 1) {
+        printf("Nenhum contato foi encontrado!\n");
+        system("pause");
     }
 }
