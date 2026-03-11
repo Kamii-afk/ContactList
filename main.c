@@ -26,6 +26,7 @@ int main () {
     int cont = 0;
     int livre;
     char resp;
+    char clear;
     
     contact list[TAM_LIST] = {0};
 
@@ -84,14 +85,34 @@ int main () {
             break;
 
             case '7':
+            printf("Salvando registro...\n");
+            fclose(fp);
+            fp = fopen("contatos.bin", "wb");
+
+            salvarRegistro(list, fp, cont);
+            Sleep(1000);
+            fclose(fp);
             return 0;
+
+            case '8':
+            printf("Deseja realmente apagar todods os registros?\nIsso ira encerrar o programa\nS/N\n");
+            clear = getch();
+                if(clear == 's' || clear == 'S') {
+                    fclose(fp);
+                    if(remove("contatos.bin") == 0) {
+                        printf("Contatos apagados!\n");
+                        return 0;
+                    }
+                } else {
+                    printf("Exclusão cancelada!\n");
+                }
+
+            break;
 
             default:
             errorRep(2);
             break;
         }
 
-    } while (option != 7);
-
-    return 0;
+    } while (option != '7');
 }

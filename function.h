@@ -19,7 +19,7 @@ void errorRep (int errorNum);
 
 //Manipulação de Arquivos
 void lerRegistro (struct contact *p, FILE *fp, int *cont);
-void salvarRegistro (struct contact *p, FILE *fp);
+void salvarRegistro (struct contact *p, FILE *fp, int cont);
 
 //Funções Programa
 void cadastrarContato (struct contact *p, FILE *fp);
@@ -37,6 +37,7 @@ void checkUse (struct contact *p, int *c);
 
 //Funções auxiliares de ShowDash
 void buscarInicial (char initial, struct contact *p);
+void foundDomin (struct contact *p, char *domin);
 void foundDDD (struct contact *p, char *ddd);
 
 #endif
