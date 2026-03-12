@@ -53,22 +53,27 @@ int main () {
                 getchar();
             
             } while (resp == 'S' || resp == 's');
+
+            system("cls");
             break;
 
             case '2':
             printf("Listar contatos\n");
             listarContato(list);
+            system("cls");
             break;
             
             case '3':
             printf("Buscar Nomes\n");
             buscarContato(list);
+            system("cls");
 
             break;
 
             case '4':
             printf("Editar\n");
             editarContato(list);
+            system("cls");
             break;
 
             case '5':
@@ -77,6 +82,7 @@ int main () {
             excluirContato(list, &livre, &cont);
             printf("%d", cont);
             system("pause");
+            system("cls");
             break;
 
             case '6':
@@ -89,7 +95,7 @@ int main () {
             fclose(fp);
             fp = fopen("contatos.bin", "wb");
 
-            salvarRegistro(list, fp, cont);
+            salvarRegistro(list, fp);
             Sleep(1000);
             fclose(fp);
             return 0;

@@ -9,13 +9,13 @@
 void lerRegistro (struct contact *p, FILE *fp, int *cont) {
     *cont = 0;
     
-    while(fread(&p[*cont], sizeof(struct contact), 1, fp)) {
+    while(*cont < 100 && fread(&p[*cont], sizeof(struct contact), 1, fp)) {
         (*cont)++;
     }
 }
 
-void salvarRegistro (struct contact *p, FILE *fp, int cont) {
-    for(int i = 0; i < cont; i++) {
+void salvarRegistro (struct contact *p, FILE *fp) {
+    for(int i = 0; i < 100; i++) {
         if(p[i].used == 1) {
             fwrite(&p[i], sizeof(struct contact), 1, fp);
         }
@@ -158,6 +158,7 @@ void buscarContato(struct contact *p) {
                 printf("%s\n", p[indice - 1].number);
                 printf("%s\n", p[indice - 1].email);
                 system("pause");
+                system("cls");
                 break;
             } else {
                 errorRep(3);
@@ -303,6 +304,8 @@ void editarContato (struct contact *p) {
 
     
     do {
+        system("cls");
+
         printf("========== Escolha uma opção para editar: ==========\n");
         printf("1 => Nome\n2 => Número\n3 => E-mail\n4 => Sair\n");
         option = getch();
@@ -355,7 +358,8 @@ void printStruct (struct contact *p, int i) {
         errorRep(3);
         return;
     }
-    
+
+    printf("===== Contato Número %d =====\n", i + 1);
     printf("Nome: %s\n", p[i].name);
     printf("Número: %s\n", p[i].number);
     printf("E-mail: %s\n", p[i].email);
@@ -407,6 +411,7 @@ void showDash (struct contact *p, int cont) {
 {
     int option;
     do {
+        system("cls");
 
         printf("Escolha uma das opções abaixo:\n");
         printf("1 - Listar contatos por inicial\n");
@@ -461,9 +466,10 @@ void buscarInicial (char initial, struct contact *p) {
         if(p[i].used == 1 && p[i].name[0] == initial) {
             printStruct(p, i);
             existe = 1;
-            system("pause");
         }
     }
+    
+    system("pause");
 
     if(existe != 1) {
         errorRep(5);
@@ -474,12 +480,14 @@ void foundDomin (struct contact *p, char *domin) {
     int found = 0;
     
     for(int i = 0; i < 100; i++) {
-        if(strstr(p[i].email, domin) != NULL) {
-            printf("===== Contato número %d =====\n", i);
+        if(p[i].used == 1 && strstr(p[i].email, domin) != NULL) {
+            printf("===== Contato número %d =====\n", i + 1);
             printStruct(p, i);
             found = 1;
         }
     }
+
+    system("pause");
 
     if(found != 1) {
         errorRep(5);
@@ -496,9 +504,12 @@ void foundDDD (struct contact *p, char *ddd) {
     for(int i = 0; i < 100; i++) {
         if(strncmp(p[i].number, ddd, strlen(ddd)) == 0) {
             printf("Contato número %d\n", i);
+            printStruct(p, i);
             found = 1;
         }
     }
+
+    system("pause");
 
     if(found != 1) {
         printf("Nenhum contato foi encontrado!\n");

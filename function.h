@@ -19,7 +19,7 @@ void errorRep (int errorNum);
 
 //Manipulação de Arquivos
 void lerRegistro (struct contact *p, FILE *fp, int *cont);
-void salvarRegistro (struct contact *p, FILE *fp, int cont);
+void salvarRegistro (struct contact *p, FILE *fp);
 
 //Funções Programa
 void cadastrarContato (struct contact *p, FILE *fp);
