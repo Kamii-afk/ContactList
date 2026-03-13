@@ -53,7 +53,7 @@ void cadastrarContato (struct contact *p, FILE *fp) {
     
     p->used = 1;
 
-    printf("===== Valores inseridos =====\n");
+    printf("\n===== Valores inseridos =====\n");
     printf("Nome: %s\n", p->name);
     printf("Número: %s\n", p->number);
     printf("E-mail: %s\n", p->email);
@@ -154,6 +154,8 @@ void buscarContato(struct contact *p) {
             } 
 
             if(p[indice - 1].used == 1) {
+                system("cls");
+                printf("===== Contato encontrado =====\n");
                 printf("%s\n", p[indice - 1].name);
                 printf("%s\n", p[indice - 1].number);
                 printf("%s\n", p[indice - 1].email);
@@ -173,14 +175,15 @@ void buscarContato(struct contact *p) {
 
             system("cls");
             printf("Consulta por nome\n");
-            printf("Insira o nome a ser buscado:\n");
+            printf("Insira o nome a ser encontrado:\n");
             fgets(name, sizeof(name), stdin);
             name[strcspn(name, "\n")] = '\0';
             upperString(name, &check);
 
             for (int i = 0; i < 100; i++) {
                 if (strcmp(p[i].name, name) == 0) {
-                    printf("Nome encontrado!\n");
+                    system("cls");
+                    printf("===== Nome encontrado =====\n");
                     printf("%s\n", p[i].name);
                     printf("%s\n", p[i].number);
                     printf("%s\n", p[i].email);
@@ -208,7 +211,8 @@ void buscarContato(struct contact *p) {
 
             for(int i = 0; i < 100; i++) {
                 if(strcmp(p[i].number, number) == 0) {
-                    printf("Nome encontrado!\n");
+                    system("cls");
+                    printf("===== Nome encontrado =====\n");
                     printf("%s\n", p[i].name);
                     printf("%s\n", p[i].number);
                     printf("%s\n", p[i].email);
@@ -237,7 +241,8 @@ void buscarContato(struct contact *p) {
 
             for (int i= 0; i < 100; i++) {
                 if(strcmp(p[i].email, email) == 0) {
-                    printf("Nome encontrado!\n");
+                    system("cls");
+                    printf("===== Nome encontrado! =====\n");
                     printf("%s\n", p[i].name);
                     printf("%s\n", p[i].number);
                     printf("%s\n", p[i].email);
@@ -276,7 +281,7 @@ int auxiliarEdit (struct contact *p) {
     
     for(int i = 0; i < 100; i++) {
         if(strcmp(name, p[i].name) == 0) {
-            printf("Nome encontrado:\n");
+            printf("===== Nome encontrado =====\n");
             printf("Nome: %s\n", p[i].name);
             printf("Número: %s\n", p[i].number);
             printf("E-mail: %s\n", p[i].email);
@@ -317,6 +322,7 @@ void editarContato (struct contact *p) {
 
             printf("Nome alterado!\n");
             printStruct(p, ref);
+            system("pause");
 
             break;
 
@@ -481,7 +487,6 @@ void foundDomin (struct contact *p, char *domin) {
     
     for(int i = 0; i < 100; i++) {
         if(p[i].used == 1 && strstr(p[i].email, domin) != NULL) {
-            printf("===== Contato número %d =====\n", i + 1);
             printStruct(p, i);
             found = 1;
         }
@@ -503,7 +508,6 @@ void foundDDD (struct contact *p, char *ddd) {
 
     for(int i = 0; i < 100; i++) {
         if(strncmp(p[i].number, ddd, strlen(ddd)) == 0) {
-            printf("Contato número %d\n", i);
             printStruct(p, i);
             found = 1;
         }

@@ -37,7 +37,7 @@ int main () {
 
     do {
         printf("Insira um opcao no menu a seguir:\n");
-        printf("01 - Novo Cadastro\n02 - Listar contatos\n03 - Buscar nomes\n04 - Editar\n05- Excluir\n06 - Estatísticas\n07 - Sair\n");
+        printf("\n01 - Novo Cadastro\n02 - Listar contatos\n03 - Buscar nomes\n04 - Editar\n05 - Excluir\n06 - Estatísticas\n07 - Sair\n");
         option = getch();
 
         switch(option) {
