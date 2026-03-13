@@ -15,10 +15,10 @@ Para excluir completamente a base de dados e recomeçar uma nova lista de contat
 sinta-se a vontade para testar.
 
 ### Créditos
-[Hisadora Faleiro dos Santos](https://github.com/Nomed-H)
-[Davyd Miller](https://github.com/Kamii-afk)
-[Ana Clara Perusso](https://github.com/anacperusso)
-[César Augusto Porto](https://github.com/cesaraugustoporto89)
+[Hisadora Faleiro dos Santos](https://github.com/Nomed-H)\
+[Davyd Miller](https://github.com/Kamii-afk)\
+[Ana Clara Perusso](https://github.com/anacperusso)\
+[César Augusto Porto](https://github.com/cesaraugustoporto89)\
 
 Obrigado pela atenção 👻
 ![thanks](https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExazluZDI3YWViazQxYTV6MGI3MWxkeXFoOGZkcHBrYjcwaW00NWljNyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/gYWeVOiMmbg3kzCTq5/giphy.gif)
